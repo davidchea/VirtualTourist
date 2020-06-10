@@ -21,5 +21,6 @@ extension MapViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         performSegue(withIdentifier: "AlbumSegue", sender: view.annotation?.coordinate)
+        mapView.deselectAnnotation(view.annotation, animated: true)
     }
 }

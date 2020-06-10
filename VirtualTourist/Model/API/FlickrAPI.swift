@@ -28,7 +28,7 @@ class FlickrAPI {
         parameters["method"] = "flickr.photos.search"
         parameters["lat"] = coordinate.latitude
         parameters["lon"] = coordinate.longitude
-        parameters["per_page"] = 10
+        parameters["per_page"] = 15
         
         let randomPage = Int.random(in: 1...pages)
         parameters["page"] = randomPage

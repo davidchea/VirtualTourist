@@ -9,19 +9,33 @@
 import UIKit
 import AlamofireImage
 
-extension AlbumViewController: UICollectionViewDataSource {
+extension AlbumViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    
+    // MARK: - UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photoURLs.count
+        return photos.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath)
         
-        guard let photoCollectionViewCell = cell as? PhotoCollectionViewCell else { return cell }
+        guard
+            let photoCollectionViewCell = cell as? PhotoCollectionViewCell,
+            let photoURL = photos[indexPath.row].url
+        else { return cell }
         
-        photoCollectionViewCell.photoImageView.af.setImage(withURL: photoURLs[indexPath.row], placeholderImage: UIImage(named: "Placeholder"))
+        photoCollectionViewCell.photoImageView.af.setImage(withURL: photoURL, placeholderImage: UIImage(named: "Placeholder"))
         
         return photoCollectionViewCell
+    }
+    
+    // MARK: - UICollectionViewDelegate
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        Photo.delete(photos[indexPath.row])
+        photos.remove(at: indexPath.row)
+        
+        collectionView.reloadData()
     }
 }

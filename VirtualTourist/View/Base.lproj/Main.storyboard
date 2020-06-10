@@ -77,24 +77,24 @@
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="fgv-Tc-Ooh">
-                                <rect key="frame" x="5" y="179" width="310" height="339"/>
+                                <rect key="frame" x="10" y="184" width="300" height="329"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="5" minimumInteritemSpacing="5" id="uVj-WF-n83">
-                                    <size key="itemSize" width="100" height="100"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="uVj-WF-n83">
+                                    <size key="itemSize" width="90" height="90"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCell" id="0vt-te-Dn2" customClass="PhotoCollectionViewCell" customModule="Virtual_Tourist" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="qxm-Gc-ngs">
-                                            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6lb-EO-hFT">
-                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
@@ -111,8 +111,12 @@
                                 </cells>
                                 <connections>
                                     <outlet property="dataSource" destination="6Es-wM-Myt" id="25F-se-V1R"/>
+                                    <outlet property="delegate" destination="6Es-wM-Myt" id="VKu-AW-04O"/>
                                 </connections>
                             </collectionView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="BLe-2h-UZW">
+                                <rect key="frame" x="150" y="296" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -120,17 +124,20 @@
                             <constraint firstItem="bJu-dN-rvz" firstAttribute="leading" secondItem="Ay6-AH-lPf" secondAttribute="leading" id="HnI-jW-1z9"/>
                             <constraint firstItem="z1N-TW-Blb" firstAttribute="leading" secondItem="Ay6-AH-lPf" secondAttribute="leading" id="OeC-fh-nKX"/>
                             <constraint firstItem="Ay6-AH-lPf" firstAttribute="bottom" secondItem="bJu-dN-rvz" secondAttribute="bottom" id="QFu-3R-QXh"/>
+                            <constraint firstItem="BLe-2h-UZW" firstAttribute="centerX" secondItem="Ay6-AH-lPf" secondAttribute="centerX" id="QOF-Od-5sW"/>
+                            <constraint firstItem="BLe-2h-UZW" firstAttribute="centerY" secondItem="Ay6-AH-lPf" secondAttribute="centerY" id="QTe-53-Oyy"/>
                             <constraint firstItem="Ay6-AH-lPf" firstAttribute="trailing" secondItem="bJu-dN-rvz" secondAttribute="trailing" id="Thy-8w-75Z"/>
                             <constraint firstItem="z1N-TW-Blb" firstAttribute="top" secondItem="Ay6-AH-lPf" secondAttribute="top" id="WKy-rG-iea"/>
-                            <constraint firstItem="fgv-Tc-Ooh" firstAttribute="top" secondItem="z1N-TW-Blb" secondAttribute="bottom" constant="5" id="iOx-fN-27W"/>
-                            <constraint firstItem="fgv-Tc-Ooh" firstAttribute="leading" secondItem="Ay6-AH-lPf" secondAttribute="leading" constant="5" id="lre-65-r72"/>
-                            <constraint firstItem="Ay6-AH-lPf" firstAttribute="trailing" secondItem="fgv-Tc-Ooh" secondAttribute="trailing" constant="5" id="nYc-vD-ai4"/>
-                            <constraint firstItem="bJu-dN-rvz" firstAttribute="top" secondItem="fgv-Tc-Ooh" secondAttribute="bottom" constant="5" id="ywd-BY-46R"/>
+                            <constraint firstItem="fgv-Tc-Ooh" firstAttribute="top" secondItem="z1N-TW-Blb" secondAttribute="bottom" constant="10" id="iOx-fN-27W"/>
+                            <constraint firstItem="fgv-Tc-Ooh" firstAttribute="leading" secondItem="Ay6-AH-lPf" secondAttribute="leading" constant="10" id="lre-65-r72"/>
+                            <constraint firstItem="Ay6-AH-lPf" firstAttribute="trailing" secondItem="fgv-Tc-Ooh" secondAttribute="trailing" constant="10" id="nYc-vD-ai4"/>
+                            <constraint firstItem="bJu-dN-rvz" firstAttribute="top" secondItem="fgv-Tc-Ooh" secondAttribute="bottom" constant="10" id="ywd-BY-46R"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Ay6-AH-lPf"/>
                     </view>
                     <navigationItem key="navigationItem" id="0It-Yd-mnq"/>
                     <connections>
+                        <outlet property="activityIndicatorView" destination="BLe-2h-UZW" id="hmT-7I-LFv"/>
                         <outlet property="collectionView" destination="fgv-Tc-Ooh" id="wQg-Xe-aXY"/>
                         <outlet property="mapView" destination="z1N-TW-Blb" id="WnX-Qr-fOD"/>
                         <outlet property="newCollectionButton" destination="bJu-dN-rvz" id="hGO-Sn-YIX"/>

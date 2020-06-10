@@ -17,11 +17,13 @@ class AlbumViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var newCollectionButton: UIButton!
     
+    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
+    
     // MARK: - Properties
     
     var coordinate: CLLocationCoordinate2D?
     
-    var photoURLs: [URL] = []
+    var photos: [Photo] = []
     var pages = 1
     
     // MARK: - Life cycle
@@ -36,26 +38,29 @@ class AlbumViewController: UIViewController {
     // MARK: - Action
     
     @IBAction func setNewCollection() {
-        guard let coordinate = coordinate else { return }
+        guard let coordinate = coordinate, let pin = Pin.get(coordinate) else { return }
+        
+        newCollectionButton.isEnabled = false
+        activityIndicatorView.startAnimating()
+        
+        photos.removeAll()
+        collectionView.reloadData()
         
         FlickrAPI.shared.getAlbumByCoordinate(coordinate: coordinate, pages: pages) { albumCodable in
             guard let albumCodable = albumCodable else { return }
             
-            self.photoURLs.removeAll()
-            
             for photo in albumCodable.photos.photo {
                 if let photoURL = FlickrAPI.shared.getPhotoURL(farm: photo.farm, server: photo.server, id: photo.id, secret: photo.secret) {
-                    self.photoURLs.append(photoURL)
-                    
-                    if let pin = Pin.get(coordinate) {
-                        Photo.add(photoURL, pin: pin)
-                    }
+                    let photo = Photo.add(photoURL, pin: pin)
+                    self.photos.append(photo)
                 }
             }
             
             self.pages = albumCodable.photos.pages
+            
             self.collectionView.reloadData()
             self.newCollectionButton.isEnabled = true
+            self.activityIndicatorView.stopAnimating()
         }
     }
     
