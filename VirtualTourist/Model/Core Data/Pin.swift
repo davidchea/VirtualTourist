@@ -31,10 +31,26 @@ extension Pin: MKAnnotation {
         return []
     }
     
-    static func add(_ location: CLLocationCoordinate2D) {
+    /// Return the pin that matches the latitude and the longitude in Core Data.
+    static func get(_ coordinate: CLLocationCoordinate2D) -> Pin? {
+        let fetchRequest: NSFetchRequest<Pin> = Pin.fetchRequest()
+        
+        do {
+            let pins = try DataController.shared.getContext().fetch(fetchRequest) as NSArray
+            let predicate = NSPredicate(format: "latitude = %@ && longitude = %@", argumentArray: [coordinate.latitude, coordinate.longitude])
+            
+            return pins.filtered(using: predicate).first as? Pin
+        } catch {
+            debugPrint("\(#function) - \(error)")
+        }
+        
+        return nil
+    }
+    
+    static func add(_ coordinate: CLLocationCoordinate2D) {
         let pin = Pin(context: DataController.shared.getContext())
-        pin.latitude = location.latitude
-        pin.longitude = location.longitude
+        pin.latitude = coordinate.latitude
+        pin.longitude = coordinate.longitude
         
         DataController.shared.saveContext()
     }

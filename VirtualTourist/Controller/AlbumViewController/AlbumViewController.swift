@@ -15,11 +15,14 @@ class AlbumViewController: UIViewController {
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var newCollectionButton: UIButton!
     
     // MARK: - Properties
     
     var coordinate: CLLocationCoordinate2D?
+    
     var photoURLs: [URL] = []
+    var pages = 1
     
     // MARK: - Life cycle
     
@@ -27,10 +30,36 @@ class AlbumViewController: UIViewController {
         super.viewDidLoad()
         
         setPointAnnotation()
-        setPhotos()
+        setNewCollection()
     }
     
-    // MARK: - Private methods
+    // MARK: - Action
+    
+    @IBAction func setNewCollection() {
+        guard let coordinate = coordinate else { return }
+        
+        FlickrAPI.shared.getAlbumByCoordinate(coordinate: coordinate, pages: pages) { albumCodable in
+            guard let albumCodable = albumCodable else { return }
+            
+            self.photoURLs.removeAll()
+            
+            for photo in albumCodable.photos.photo {
+                if let photoURL = FlickrAPI.shared.getPhotoURL(farm: photo.farm, server: photo.server, id: photo.id, secret: photo.secret) {
+                    self.photoURLs.append(photoURL)
+                    
+                    if let pin = Pin.get(coordinate) {
+                        Photo.add(photoURL, pin: pin)
+                    }
+                }
+            }
+            
+            self.pages = albumCodable.photos.pages
+            self.collectionView.reloadData()
+            self.newCollectionButton.isEnabled = true
+        }
+    }
+    
+    // MARK: - Private method
     
     /// Add a pin to the map and zoom on the location.
     private func setPointAnnotation() {
@@ -42,21 +71,5 @@ class AlbumViewController: UIViewController {
         
         let coordinateRegion = MKCoordinateRegion(center: pointAnnotation.coordinate, latitudinalMeters: 500000, longitudinalMeters: 500000)
         mapView.setRegion(coordinateRegion, animated: true)
-    }
-    
-    private func setPhotos() {
-        guard let coordinate = coordinate else { return }
-        
-        FlickrAPI.shared.getAlbumByCoordinate(coordinate: coordinate) { albumCodable in
-            guard let albumCodable = albumCodable else { return }
-            
-            for photo in albumCodable.photos.photo {
-                if let photoURL = FlickrAPI.shared.getPhotoURL(farm: photo.farm, server: photo.server, id: photo.id, secret: photo.secret) {
-                    self.photoURLs.append(photoURL)
-                }
-            }
-            
-            self.collectionView.reloadData()
-        }
     }
 }

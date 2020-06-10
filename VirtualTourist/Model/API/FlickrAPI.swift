@@ -24,11 +24,14 @@ class FlickrAPI {
     
     // MARK: - Public methods
     
-    func getAlbumByCoordinate(coordinate: CLLocationCoordinate2D, completionHandler: @escaping (AlbumCodable?) -> Void ) {
+    func getAlbumByCoordinate(coordinate: CLLocationCoordinate2D, pages: Int, completionHandler: @escaping (AlbumCodable?) -> Void ) {
         parameters["method"] = "flickr.photos.search"
         parameters["lat"] = coordinate.latitude
         parameters["lon"] = coordinate.longitude
         parameters["per_page"] = 10
+        
+        let randomPage = Int.random(in: 1...pages)
+        parameters["page"] = randomPage
         
         AF.request(base, parameters: parameters).responseJSON { dataResponse in
             var albumCodable: AlbumCodable?

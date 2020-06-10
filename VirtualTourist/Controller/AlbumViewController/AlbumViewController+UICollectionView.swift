@@ -20,7 +20,7 @@ extension AlbumViewController: UICollectionViewDataSource {
         
         guard let photoCollectionViewCell = cell as? PhotoCollectionViewCell else { return cell }
         
-        photoCollectionViewCell.photoImageView.af.setImage(withURL: photoURLs[indexPath.row])
+        photoCollectionViewCell.photoImageView.af.setImage(withURL: photoURLs[indexPath.row], placeholderImage: UIImage(named: "Placeholder"))
         
         return photoCollectionViewCell
     }
