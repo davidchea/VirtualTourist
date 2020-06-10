@@ -83,15 +83,32 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCell" id="0vt-te-Dn2">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCell" id="0vt-te-Dn2" customClass="PhotoCollectionViewCell" customModule="Virtual_Tourist" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="qxm-Gc-ngs">
                                             <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6lb-EO-hFT">
+                                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="6lb-EO-hFT" secondAttribute="bottom" id="6Ol-Ea-JQn"/>
+                                                <constraint firstItem="6lb-EO-hFT" firstAttribute="top" secondItem="qxm-Gc-ngs" secondAttribute="top" id="pg1-Oj-8QL"/>
+                                                <constraint firstAttribute="trailing" secondItem="6lb-EO-hFT" secondAttribute="trailing" id="vBI-iz-EJh"/>
+                                                <constraint firstItem="6lb-EO-hFT" firstAttribute="leading" secondItem="qxm-Gc-ngs" secondAttribute="leading" id="wrQ-29-Suc"/>
+                                            </constraints>
                                         </collectionViewCellContentView>
+                                        <connections>
+                                            <outlet property="photoImageView" destination="6lb-EO-hFT" id="WEX-1m-rv9"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="6Es-wM-Myt" id="25F-se-V1R"/>
+                                </connections>
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -111,6 +128,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="0It-Yd-mnq"/>
                     <connections>
+                        <outlet property="collectionView" destination="fgv-Tc-Ooh" id="wQg-Xe-aXY"/>
                         <outlet property="mapView" destination="z1N-TW-Blb" id="WnX-Qr-fOD"/>
                     </connections>
                 </viewController>

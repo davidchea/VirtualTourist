@@ -35,8 +35,6 @@ class MapViewController: UIViewController {
         mapView.addAnnotation(annotation)
         
         Pin.add(coordinate)
-        
-        performSegue(withIdentifier: "AlbumSegue", sender: coordinate)
     }
     
     // MARK: - Inherited method

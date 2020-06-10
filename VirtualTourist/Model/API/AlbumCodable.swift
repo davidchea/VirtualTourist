@@ -1,14 +1,14 @@
 //
-//  Album.swift
+//  AlbumCodable.swift
 //  VirtualTourist
 //
 //  Created by David Chea on 10/06/2020.
 //  Copyright © 2020 David Chea. All rights reserved.
 //
 
-// MARK: - Album
+// MARK: - AlbumCodable
 
-struct Album: Codable {
+struct AlbumCodable: Codable {
     
     let photos: Photos
     let stat: String
@@ -18,8 +18,8 @@ struct Album: Codable {
 
 struct Photos: Codable {
     
-    let page, perpage: Int
-    let pages, total: String
+    let page, pages, perpage: Int
+    let total: String
     let photo: [PhotoCodable]
 }
 
