@@ -26,7 +26,7 @@ class AlbumViewController: UIViewController {
     var photos: [Photo] = []
     var pages = 1
     
-    let nbPhotosDisplayed = 5
+    let nbPhotosDisplayed = 10
     
     // MARK: - Life cycle
     
