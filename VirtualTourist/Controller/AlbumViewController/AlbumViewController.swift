@@ -21,10 +21,12 @@ class AlbumViewController: UIViewController {
     
     // MARK: - Properties
     
-    var coordinate: CLLocationCoordinate2D?
+    var pin: Pin?
     
     var photos: [Photo] = []
     var pages = 1
+    
+    let nbPhotosDisplayed = 5
     
     // MARK: - Life cycle
     
@@ -32,21 +34,55 @@ class AlbumViewController: UIViewController {
         super.viewDidLoad()
         
         setPointAnnotation()
-        setNewCollection()
+        setCollection()
     }
     
     // MARK: - Action
     
     @IBAction func setNewCollection() {
-        guard let coordinate = coordinate, let pin = Pin.get(coordinate) else { return }
+        photos.forEach { Photo.delete($0) }
+        photos.removeAll()
+        
+        collectionView.reloadData()
+        
+        setPhotos(nbPhotosDisplayed)
+    }
+    
+    // MARK: - Private methods
+    
+    /// Add a pin to the map and zoom on the location.
+    private func setPointAnnotation() {
+        guard let pin = pin else { return }
+        
+        let pointAnnotation = MKPointAnnotation()
+        pointAnnotation.coordinate = pin.coordinate
+        mapView.addAnnotation(pointAnnotation)
+        
+        let coordinateRegion = MKCoordinateRegion(center: pointAnnotation.coordinate, latitudinalMeters: 500000, longitudinalMeters: 500000)
+        mapView.setRegion(coordinateRegion, animated: true)
+    }
+    
+    private func setCollection() {
+        guard
+            let pin = pin,
+            let photosSet = pin.photos,
+            let photosArray = Array(photosSet) as? [Photo]
+        else { return }
+        
+        photos = photosArray
+        
+        if photos.count < nbPhotosDisplayed {
+            setPhotos(nbPhotosDisplayed - photos.count)
+        }
+    }
+    
+    private func setPhotos(_ perPage: Int) {
+        guard let pin = pin else { return }
         
         newCollectionButton.isEnabled = false
         activityIndicatorView.startAnimating()
         
-        photos.removeAll()
-        collectionView.reloadData()
-        
-        FlickrAPI.shared.getAlbumByCoordinate(coordinate: coordinate, pages: pages) { albumCodable in
+        FlickrAPI.shared.getAlbumByCoordinate(coordinate: pin.coordinate, perPage: perPage, pages: pages) { albumCodable in
             guard let albumCodable = albumCodable else { return }
             
             for photo in albumCodable.photos.photo {
@@ -62,19 +98,5 @@ class AlbumViewController: UIViewController {
             self.newCollectionButton.isEnabled = true
             self.activityIndicatorView.stopAnimating()
         }
-    }
-    
-    // MARK: - Private method
-    
-    /// Add a pin to the map and zoom on the location.
-    private func setPointAnnotation() {
-        guard let coordinate = coordinate else { return }
-        
-        let pointAnnotation = MKPointAnnotation()
-        pointAnnotation.coordinate = coordinate
-        mapView.addAnnotation(pointAnnotation)
-        
-        let coordinateRegion = MKCoordinateRegion(center: pointAnnotation.coordinate, latitudinalMeters: 500000, longitudinalMeters: 500000)
-        mapView.setRegion(coordinateRegion, animated: true)
     }
 }

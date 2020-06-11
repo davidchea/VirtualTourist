@@ -20,7 +20,12 @@ extension MapViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        performSegue(withIdentifier: "AlbumSegue", sender: view.annotation?.coordinate)
+        guard
+            let coordinate = view.annotation?.coordinate,
+            let pin = Pin.get(coordinate)
+        else { return }
+        
+        performSegue(withIdentifier: "AlbumSegue", sender: pin)
         mapView.deselectAnnotation(view.annotation, animated: true)
     }
 }

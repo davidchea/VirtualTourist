@@ -41,6 +41,6 @@ class MapViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let albumViewController = segue.destination as? AlbumViewController
-        albumViewController?.coordinate = sender as? CLLocationCoordinate2D
+        albumViewController?.pin = sender as? Pin
     }
 }

@@ -19,18 +19,6 @@ extension Pin: MKAnnotation {
     
     // MARK: - Static methods
     
-    static func getAll() -> [Pin] {
-        let fetchRequest: NSFetchRequest<Pin> = Pin.fetchRequest()
-        
-        do {
-            return try DataController.shared.getContext().fetch(fetchRequest) as [Pin]
-        } catch {
-            debugPrint("\(#function) - \(error)")
-        }
-        
-        return []
-    }
-    
     /// Return the pin that matches the latitude and the longitude in Core Data.
     static func get(_ coordinate: CLLocationCoordinate2D) -> Pin? {
         let fetchRequest: NSFetchRequest<Pin> = Pin.fetchRequest()
@@ -45,6 +33,18 @@ extension Pin: MKAnnotation {
         }
         
         return nil
+    }
+    
+    static func getAll() -> [Pin] {
+        let fetchRequest: NSFetchRequest<Pin> = Pin.fetchRequest()
+        
+        do {
+            return try DataController.shared.getContext().fetch(fetchRequest) as [Pin]
+        } catch {
+            debugPrint("\(#function) - \(error)")
+        }
+        
+        return []
     }
     
     static func add(_ coordinate: CLLocationCoordinate2D) {

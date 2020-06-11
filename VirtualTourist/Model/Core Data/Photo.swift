@@ -16,14 +16,15 @@ extension Photo {
         let photo = Photo(context: DataController.shared.getContext())
         
         do {
-            let data = try Data(contentsOf: photoURL)
-            photo.photo = data
+            let photoData = try Data(contentsOf: photoURL)
+            photo.photo = photoData
         } catch {
             debugPrint("\(#function) - \(error)")
         }
         
         photo.url = photoURL
         photo.pin = pin
+        
         DataController.shared.saveContext()
         
         return photo
