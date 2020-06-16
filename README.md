@@ -5,8 +5,8 @@
 ## Screenshots
 
 <p float="left" align="center">
-    <img src="./README-IMAGES/screenshot-map.jpg" width="294" height="541">
-    <img src="./README-IMAGES/screenshot-album.jpg" width="294" height="541">
+    <img src="./README-IMAGES/screenshot-map.jpg" width="250" height="444">
+    <img src="./README-IMAGES/screenshot-album.jpg" width="250" height="444">
 </p>
 
 ## License
